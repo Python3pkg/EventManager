@@ -1,4 +1,4 @@
-from EventManager import (
+from .EventManager import (
     EventManager,
     Event,
     VERSION

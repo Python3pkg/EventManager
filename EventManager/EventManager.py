@@ -1,3 +1,4 @@
+import collections
 __all__ = ("Event", "EventManager", "VERSION")
 VERSION = ("0", "7")
 
@@ -28,7 +29,7 @@ class Event(list):
     def add_handler(self, handler):
         """Adds a handler. Also checks if it is callable.
         To bypass checks, use Event.append() instead."""
-        if not callable(handler):
+        if not isinstance(handler, collections.Callable):
             raise TypeError("'%s' is not callable." % handler)
 
         self.append(handler)
@@ -103,7 +104,7 @@ class EventManager(dict):
             # and e.test_method as handler."""
         for method in dir(events):
             # Skip attributes
-            if not callable(getattr(events, method)):
+            if not isinstance(getattr(events, method), collections.Callable):
                 continue
             # Skip "trash" functions
             if method.startswith("_"):
